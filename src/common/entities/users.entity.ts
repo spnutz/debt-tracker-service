@@ -5,11 +5,8 @@ export class Users {
   @PrimaryGeneratedColumn({ name: 'user_id' })
   userId: number;
 
-  @Column({ name: 'first_name' })
-  firstName: string;
-
-  @Column({ name: 'last_name' })
-  lastName: string;
+  @Column({ name: 'username' })
+  username: string;
 
   @Column({ name: 'email' })
   email: string;
@@ -17,11 +14,8 @@ export class Users {
   @Column({ name: 'password' })
   password: string;
 
-  @Column({ name: 'last_login' })
-  lastLogin: Date;
-
-  @Column({ name: 'is_active' })
-  isActive: boolean;
+  @Column({ name: 'is_verify_email' })
+  isVerifyEmail: boolean;
 
   @Column({ name: 'user_role' })
   userRole: string;

@@ -23,7 +23,7 @@ import { AccessTokenGuard } from './common/guards/access-token.guard';
     HttpModule,
     AuthModule,
     DatabaseModule,
-    UsersModule,
+    // UsersModule,
   ],
   providers: [
     // {

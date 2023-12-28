@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Users, UsersDocument } from 'src/common/schemas/users.schema';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Users } from 'src/common/entities/users.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(Users.name)
-    private userModel: Model<Users>,
+    @InjectRepository(Users)
+    private userRepository: Repository<Users>,
   ) {}
 
-  async getById(id: string): Promise<UsersDocument> {
-    const user = await this.userModel.findById(id);
-    return user;
-  }
+  // async getById(id: string): Promise<UsersDocument> {
+  //   const user = await this.userModel.findById(id);
+  //   return user;
+  // }
 }

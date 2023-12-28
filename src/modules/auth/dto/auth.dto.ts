@@ -5,13 +5,6 @@ export class RegisterDto {
   @ApiProperty({
     type: String,
   })
-  @IsString()
-  @IsNotEmpty()
-  name: string;
-
-  @ApiProperty({
-    type: String,
-  })
   @IsEmail()
   email: string;
 

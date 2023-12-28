@@ -58,3 +58,10 @@ $ docker-compose up -d
 if use TypeORM --> please create entity for model from entity folder
 if use Mongoose --> please create scehma for model from scehma folder
 ```
+
+## TypeOrm Migration
+
+```bash
+# Create Migration Script ex. name=create-users-table yarn run migration:create  
+$ name={fileName} yarn run migration:create  
+```
