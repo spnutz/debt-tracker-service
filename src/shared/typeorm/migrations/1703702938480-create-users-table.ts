@@ -10,7 +10,8 @@ export class CreateUsersTable1703702938480 implements MigrationInterface {
             email varchar(255)NOT NULL,
             is_verify_email bool NOT NULL DEFAULT FALSE,
             user_role varchar(10) NULL,
-            create_at timestamptz NOT NULL
+            create_at timestamptz NOT NULL,
+            CONSTRAINT users_pkey PRIMARY KEY ("user_id")
         );
     `);
   }

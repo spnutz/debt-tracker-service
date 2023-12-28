@@ -63,5 +63,8 @@ if use Mongoose --> please create scehma for model from scehma folder
 
 ```bash
 # Create Migration Script ex. name=create-users-table yarn run migration:create  
-$ name={fileName} yarn run migration:create  
+$ name={fileName} yarn migration:create  
+
+# Run Migration script
+$ yarn migration:run
 ```

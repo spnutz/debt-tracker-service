@@ -37,35 +37,37 @@ export class AuthService {
     });
   }
 
-  // async login(body: LoginDto): Promise<any> {
-  //   const { username, password } = body;
-  //   const user = await this.usersModel.findOne({ username }).exec();
-  //   if (!user) {
-  //     throw new BaseException('user no found', HttpStatus.NOT_FOUND);
-  //   }
-  //   if (!(await bcrypt.compare(password, user.password))) {
-  //     throw new UnauthorizedException();
-  //   }
+  async login(body: LoginDto): Promise<any> {
+    const { username, password } = body;
+    const user = await this.usersResository.findOne({
+      where: { username: username },
+    });
+    if (!user) {
+      throw new BaseException('user no found', HttpStatus.NOT_FOUND);
+    }
+    if (!(await bcrypt.compare(password, user.password))) {
+      throw new UnauthorizedException();
+    }
 
-  //   return this.getTokens(user._id, user.username);
-  // }
+    return this.getTokens(user.userId, user.username);
+  }
 
-  // private async getTokens(userId: any, username: string) {
-  //   const payload = { sub: userId, username: username };
-  //   const [accessToken, refreshToken] = await Promise.all([
-  //     this.jwtService.signAsync(
-  //       { payload },
-  //       { secret: 'test', expiresIn: '15m' },
-  //     ),
-  //     this.jwtService.signAsync(
-  //       { payload },
-  //       { secret: 'test', expiresIn: '1d' },
-  //     ),
-  //   ]);
+  private async getTokens(userId: any, username: string) {
+    const payload = { sub: userId, username: username };
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.signAsync(
+        { payload },
+        { secret: 'test', expiresIn: '15m' },
+      ),
+      this.jwtService.signAsync(
+        { payload },
+        { secret: 'test', expiresIn: '1d' },
+      ),
+    ]);
 
-  //   return {
-  //     accessToken,
-  //     refreshToken,
-  //   };
-  // }
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
 }
