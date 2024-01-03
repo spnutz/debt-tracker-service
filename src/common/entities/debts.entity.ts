@@ -16,4 +16,7 @@ export class Debts {
 
   @Column({ name: 'loan_date' })
   loanDate: Date;
+
+  @Column({ name: 'created_by' })
+  createdBy: number;
 }

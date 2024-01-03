@@ -7,4 +7,7 @@ export class Debtors {
 
   @Column({ name: 'name' })
   name: string;
+
+  @Column({ name: 'created_by' })
+  createdBy: number;
 }

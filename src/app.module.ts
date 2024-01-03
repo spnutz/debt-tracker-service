@@ -7,11 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module';
 import { DatabaseModule } from './modules/database/database.module';
 import { mongo, pg } from './config/database.config';
-import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { HttpExceptionFilter } from './common/exceptions/http.exception.filter';
-// import { UsersModule } from './modules/users/users.module';
-// import { AccessTokenStrategy } from './modules/auth/strategies/access-token.strategy';
-import { AccessTokenGuard } from './common/guards/access-token.guard';
+import { DebtModule } from './modules/debt/debt.module';
 
 @Module({
   imports: [
@@ -23,14 +19,9 @@ import { AccessTokenGuard } from './common/guards/access-token.guard';
     HttpModule,
     AuthModule,
     DatabaseModule,
-    // UsersModule,
+    DebtModule,
   ],
-  providers: [
-    // {
-    //   provide: APP_FILTER,
-    //   useClass: HttpExceptionFilter,
-    // },
-  ],
+  providers: [],
   controllers: [HealthController],
 })
 export class AppModule {}

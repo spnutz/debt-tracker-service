@@ -1,12 +1,13 @@
 import * as bcrypt from 'bcrypt';
-import { HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { LoginDto, RegisterDto } from './dto/auth.dto';
-import { BaseException } from 'src/common/exceptions/base.exception';
 import { ROLE } from 'src/common/constant/enum';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/common/entities/users.entity';
 import { Repository } from 'typeorm';
+import { DataAlreadyExistsException } from 'src/common/exceptions/data-already-exists.exception';
+import { DataNotFoundException } from 'src/common/exceptions/data-not-found.exeption';
 
 @Injectable()
 export class AuthService {
@@ -21,9 +22,9 @@ export class AuthService {
       where: { email: body.email },
     });
     if (user)
-      throw new BaseException(
+      throw new DataAlreadyExistsException(
         'This email already exists.',
-        HttpStatus.CONFLICT,
+        'EMAIL_ALREADY_EXISTS',
       );
     const saltOrRounds = 10;
     const hash = await bcrypt.hash(body.password, saltOrRounds);
@@ -43,7 +44,7 @@ export class AuthService {
       where: { username: username },
     });
     if (!user) {
-      throw new BaseException('user no found', HttpStatus.NOT_FOUND);
+      throw new DataNotFoundException('user no found', 'USER_NOT_FOUND');
     }
     if (!(await bcrypt.compare(password, user.password))) {
       throw new UnauthorizedException();
@@ -53,7 +54,7 @@ export class AuthService {
   }
 
   private async getTokens(userId: any, username: string) {
-    const payload = { sub: userId, username: username };
+    const payload = { userId: userId, username: username };
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         { payload },
