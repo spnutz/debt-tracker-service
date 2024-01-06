@@ -4,11 +4,17 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { CreateDebtBodyDto, CreateDebtorBodyDto } from './dto/debt.dto';
+import {
+  CreateDebtBodyDto,
+  CreateDebtorBodyDto,
+  GetDebtorDetailResponseDto,
+  ListDeptorsResponseDto,
+} from './dto/debt.dto';
 import { AccessTokenGuard } from 'src/common/guards/access-token.guard';
 import { UserInterceptor } from 'src/common/interceptors/user.interceptor';
 import { User } from 'src/common/decoretors/user.decoretor';
@@ -37,8 +43,21 @@ export class DebtController {
   @UseInterceptors(UserInterceptor)
   @HttpCode(HttpStatus.OK)
   @Get('debtors')
-  async listDebtors(@User() user: ICurrentUser) {
+  async listDebtors(
+    @User() user: ICurrentUser,
+  ): Promise<ListDeptorsResponseDto[]> {
     return this.debtorsService.listDebtors(user);
+  }
+
+  @UseGuards(AccessTokenGuard)
+  @UseInterceptors(UserInterceptor)
+  @HttpCode(HttpStatus.OK)
+  @Get('debtors/:id')
+  async getDebtor(
+    @User() user: ICurrentUser,
+    @Param('id') id: string,
+  ): Promise<GetDebtorDetailResponseDto> {
+    return this.debtsService.getDebtsByDebtorsId(user, parseInt(id));
   }
 
   @UseGuards(AccessTokenGuard)

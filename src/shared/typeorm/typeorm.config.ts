@@ -1,21 +1,14 @@
-import { ConfigService } from '@nestjs/config';
 import { DataSource, DataSourceOptions } from 'typeorm';
-
-const config = new ConfigService();
+import 'dotenv/config';
 
 export const dataSourceOption: DataSourceOptions = {
   synchronize: false,
   type: 'postgres',
-  //   host: config.get<string>('pg.host'),
-  //   port: config.get<number>('pg.port'),
-  //   username: config.get<string>('pg.user'),
-  //   password: config.get<string>('pg.password'),
-  //   database: config.get<string>('pg.name'),
-  host: 'localhost',
-  username: 'root',
-  password: 'root',
-  database: 'auth-service',
-  port: 5432,
+  host: process.env.DATABASE_HOST || '127.0.0.1',
+  port: Number(process.env.DATABASE_PORT),
+  username: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_DB,
   extra: {
     connectionLimit: 30,
   },

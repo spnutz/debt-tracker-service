@@ -42,3 +42,23 @@ export class CreateDebtBodyDto {
   @IsDateString()
   loanDate: string;
 }
+
+export class ListDeptorsResponseDto {
+  debtorId: number;
+  name: string;
+  createdBy: number;
+}
+
+export class DebtsItemsDto {
+  id: number;
+  debtorId: number;
+  amount: number;
+  description: string;
+  loanDate: Date;
+  createdBy: number;
+}
+export class GetDebtorDetailResponseDto {
+  debtor: string;
+  total: number;
+  items: DebtsItemsDto[];
+}

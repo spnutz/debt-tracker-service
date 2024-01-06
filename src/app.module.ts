@@ -13,6 +13,7 @@ import { DebtModule } from './modules/debt/debt.module';
   imports: [
     ConfigModule.forRoot({
       load: [mongo, pg],
+      isGlobal: true,
     }),
     TerminusModule,
     HealthModule,

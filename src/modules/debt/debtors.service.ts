@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Debtors } from 'src/common/entities';
 import { Repository } from 'typeorm';
-import { CreateDebtorBodyDto } from './dto/debt.dto';
+import { CreateDebtorBodyDto, ListDeptorsResponseDto } from './dto/debt.dto';
 import { ICurrentUser } from 'src/common/interfaces/user.interface';
 import { DataAlreadyExistsException } from 'src/common/exceptions/data-already-exists.exception';
 
@@ -28,7 +28,7 @@ export class DebtorsService {
     await this.debtorsRepository.insert({ name, createdBy: user.userId });
   }
 
-  async listDebtors(user: ICurrentUser) {
+  async listDebtors(user: ICurrentUser): Promise<ListDeptorsResponseDto[]> {
     return this.debtorsRepository.find({ where: { createdBy: user.userId } });
   }
 }
