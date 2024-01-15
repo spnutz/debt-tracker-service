@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { HealthController } from './modules/health/health.controller';
 import { HealthModule } from './modules/health/health.module';
@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { DatabaseModule } from './modules/database/database.module';
 import { mongo, pg } from './config/database.config';
 import { DebtModule } from './modules/debt/debt.module';
+import { LoggerMiddleware } from './common/middleware/logger.middleware';
 
 @Module({
   imports: [
@@ -22,7 +23,11 @@ import { DebtModule } from './modules/debt/debt.module';
     DatabaseModule,
     DebtModule,
   ],
-  providers: [],
+  providers: [Logger],
   controllers: [HealthController],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}

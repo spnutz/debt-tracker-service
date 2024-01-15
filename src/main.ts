@@ -35,6 +35,7 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors();
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   await app.listen(AppConfigService.getEnvPort());
